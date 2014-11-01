@@ -57,7 +57,8 @@ typedef enum MAV_AUTOPILOT
 	MAV_AUTOPILOT_ARMAZILA=15, /* Armazila -- http://armazila.com | */
 	MAV_AUTOPILOT_AEROB=16, /* Aerob -- http://aerob.ru | */
 	MAV_AUTOPILOT_ASLUAV=17, /* ASLUAV autopilot -- http://www.asl.ethz.ch | */
-	MAV_AUTOPILOT_ENUM_END=18, /*  | */
+	MAV_AUTOPILOT_QUAD_FORMATION=18, /* AAU QUAD Formation flying | */
+	MAV_AUTOPILOT_ENUM_END=19, /*  | */
 } MAV_AUTOPILOT;
 #endif
 
@@ -748,6 +749,7 @@ typedef enum MAV_BATTERY_FUNCTION
 #include "./mavlink_msg_named_value_int.h"
 #include "./mavlink_msg_statustext.h"
 #include "./mavlink_msg_debug.h"
+#include "./mavlink_msg_quad_pos.h"
 
 #ifdef __cplusplus
 }
