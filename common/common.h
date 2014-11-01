@@ -749,7 +749,6 @@ typedef enum MAV_BATTERY_FUNCTION
 #include "./mavlink_msg_named_value_int.h"
 #include "./mavlink_msg_statustext.h"
 #include "./mavlink_msg_debug.h"
-#include "./mavlink_msg_quad_pos.h"
 
 #ifdef __cplusplus
 }
