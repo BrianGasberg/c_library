@@ -1,6 +1,6 @@
 // MESSAGE QUAD_POS PACKING
 
-#define MAVLINK_MSG_ID_QUAD_POS 160
+#define MAVLINK_MSG_ID_QUAD_POS 199
 
 typedef struct __mavlink_quad_pos_t
 {
@@ -11,10 +11,10 @@ typedef struct __mavlink_quad_pos_t
 } mavlink_quad_pos_t;
 
 #define MAVLINK_MSG_ID_QUAD_POS_LEN 7
-#define MAVLINK_MSG_ID_160_LEN 7
+#define MAVLINK_MSG_ID_199_LEN 7
 
 #define MAVLINK_MSG_ID_QUAD_POS_CRC 32
-#define MAVLINK_MSG_ID_160_CRC 32
+#define MAVLINK_MSG_ID_199_CRC 32
 
 
 
