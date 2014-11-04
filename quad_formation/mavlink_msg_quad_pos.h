@@ -7,24 +7,26 @@ typedef struct __mavlink_quad_pos_t
  int16_t x; ///< x-axis (int16_t)
  int16_t y; ///< y-axis (int16_t)
  int16_t z; ///< z-axis (int16_t)
- uint8_t pos_no; ///< Position number
+ uint8_t CMD; ///< Command
+ uint8_t pos_no; ///< Coordinate set number
 } mavlink_quad_pos_t;
 
-#define MAVLINK_MSG_ID_QUAD_POS_LEN 7
-#define MAVLINK_MSG_ID_199_LEN 7
+#define MAVLINK_MSG_ID_QUAD_POS_LEN 8
+#define MAVLINK_MSG_ID_199_LEN 8
 
-#define MAVLINK_MSG_ID_QUAD_POS_CRC 32
-#define MAVLINK_MSG_ID_199_CRC 32
+#define MAVLINK_MSG_ID_QUAD_POS_CRC 107
+#define MAVLINK_MSG_ID_199_CRC 107
 
 
 
 #define MAVLINK_MESSAGE_INFO_QUAD_POS { \
 	"QUAD_POS", \
-	4, \
+	5, \
 	{  { "x", NULL, MAVLINK_TYPE_INT16_T, 0, 0, offsetof(mavlink_quad_pos_t, x) }, \
          { "y", NULL, MAVLINK_TYPE_INT16_T, 0, 2, offsetof(mavlink_quad_pos_t, y) }, \
          { "z", NULL, MAVLINK_TYPE_INT16_T, 0, 4, offsetof(mavlink_quad_pos_t, z) }, \
-         { "pos_no", NULL, MAVLINK_TYPE_UINT8_T, 0, 6, offsetof(mavlink_quad_pos_t, pos_no) }, \
+         { "CMD", NULL, MAVLINK_TYPE_UINT8_T, 0, 6, offsetof(mavlink_quad_pos_t, CMD) }, \
+         { "pos_no", NULL, MAVLINK_TYPE_UINT8_T, 0, 7, offsetof(mavlink_quad_pos_t, pos_no) }, \
          } \
 }
 
@@ -35,21 +37,23 @@ typedef struct __mavlink_quad_pos_t
  * @param component_id ID of this component (e.g. 200 for IMU)
  * @param msg The MAVLink message to compress the data into
  *
- * @param pos_no Position number
+ * @param CMD Command
+ * @param pos_no Coordinate set number
  * @param x x-axis (int16_t)
  * @param y y-axis (int16_t)
  * @param z z-axis (int16_t)
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_quad_pos_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg,
-						       uint8_t pos_no, int16_t x, int16_t y, int16_t z)
+						       uint8_t CMD, uint8_t pos_no, int16_t x, int16_t y, int16_t z)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_QUAD_POS_LEN];
 	_mav_put_int16_t(buf, 0, x);
 	_mav_put_int16_t(buf, 2, y);
 	_mav_put_int16_t(buf, 4, z);
-	_mav_put_uint8_t(buf, 6, pos_no);
+	_mav_put_uint8_t(buf, 6, CMD);
+	_mav_put_uint8_t(buf, 7, pos_no);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_QUAD_POS_LEN);
 #else
@@ -57,6 +61,7 @@ static inline uint16_t mavlink_msg_quad_pos_pack(uint8_t system_id, uint8_t comp
 	packet.x = x;
 	packet.y = y;
 	packet.z = z;
+	packet.CMD = CMD;
 	packet.pos_no = pos_no;
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), &packet, MAVLINK_MSG_ID_QUAD_POS_LEN);
@@ -76,7 +81,8 @@ static inline uint16_t mavlink_msg_quad_pos_pack(uint8_t system_id, uint8_t comp
  * @param component_id ID of this component (e.g. 200 for IMU)
  * @param chan The MAVLink channel this message will be sent over
  * @param msg The MAVLink message to compress the data into
- * @param pos_no Position number
+ * @param CMD Command
+ * @param pos_no Coordinate set number
  * @param x x-axis (int16_t)
  * @param y y-axis (int16_t)
  * @param z z-axis (int16_t)
@@ -84,14 +90,15 @@ static inline uint16_t mavlink_msg_quad_pos_pack(uint8_t system_id, uint8_t comp
  */
 static inline uint16_t mavlink_msg_quad_pos_pack_chan(uint8_t system_id, uint8_t component_id, uint8_t chan,
 							   mavlink_message_t* msg,
-						           uint8_t pos_no,int16_t x,int16_t y,int16_t z)
+						           uint8_t CMD,uint8_t pos_no,int16_t x,int16_t y,int16_t z)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_QUAD_POS_LEN];
 	_mav_put_int16_t(buf, 0, x);
 	_mav_put_int16_t(buf, 2, y);
 	_mav_put_int16_t(buf, 4, z);
-	_mav_put_uint8_t(buf, 6, pos_no);
+	_mav_put_uint8_t(buf, 6, CMD);
+	_mav_put_uint8_t(buf, 7, pos_no);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_QUAD_POS_LEN);
 #else
@@ -99,6 +106,7 @@ static inline uint16_t mavlink_msg_quad_pos_pack_chan(uint8_t system_id, uint8_t
 	packet.x = x;
 	packet.y = y;
 	packet.z = z;
+	packet.CMD = CMD;
 	packet.pos_no = pos_no;
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), &packet, MAVLINK_MSG_ID_QUAD_POS_LEN);
@@ -122,7 +130,7 @@ static inline uint16_t mavlink_msg_quad_pos_pack_chan(uint8_t system_id, uint8_t
  */
 static inline uint16_t mavlink_msg_quad_pos_encode(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg, const mavlink_quad_pos_t* quad_pos)
 {
-	return mavlink_msg_quad_pos_pack(system_id, component_id, msg, quad_pos->pos_no, quad_pos->x, quad_pos->y, quad_pos->z);
+	return mavlink_msg_quad_pos_pack(system_id, component_id, msg, quad_pos->CMD, quad_pos->pos_no, quad_pos->x, quad_pos->y, quad_pos->z);
 }
 
 /**
@@ -136,28 +144,30 @@ static inline uint16_t mavlink_msg_quad_pos_encode(uint8_t system_id, uint8_t co
  */
 static inline uint16_t mavlink_msg_quad_pos_encode_chan(uint8_t system_id, uint8_t component_id, uint8_t chan, mavlink_message_t* msg, const mavlink_quad_pos_t* quad_pos)
 {
-	return mavlink_msg_quad_pos_pack_chan(system_id, component_id, chan, msg, quad_pos->pos_no, quad_pos->x, quad_pos->y, quad_pos->z);
+	return mavlink_msg_quad_pos_pack_chan(system_id, component_id, chan, msg, quad_pos->CMD, quad_pos->pos_no, quad_pos->x, quad_pos->y, quad_pos->z);
 }
 
 /**
  * @brief Send a quad_pos message
  * @param chan MAVLink channel to send the message
  *
- * @param pos_no Position number
+ * @param CMD Command
+ * @param pos_no Coordinate set number
  * @param x x-axis (int16_t)
  * @param y y-axis (int16_t)
  * @param z z-axis (int16_t)
  */
 #ifdef MAVLINK_USE_CONVENIENCE_FUNCTIONS
 
-static inline void mavlink_msg_quad_pos_send(mavlink_channel_t chan, uint8_t pos_no, int16_t x, int16_t y, int16_t z)
+static inline void mavlink_msg_quad_pos_send(mavlink_channel_t chan, uint8_t CMD, uint8_t pos_no, int16_t x, int16_t y, int16_t z)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_QUAD_POS_LEN];
 	_mav_put_int16_t(buf, 0, x);
 	_mav_put_int16_t(buf, 2, y);
 	_mav_put_int16_t(buf, 4, z);
-	_mav_put_uint8_t(buf, 6, pos_no);
+	_mav_put_uint8_t(buf, 6, CMD);
+	_mav_put_uint8_t(buf, 7, pos_no);
 
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_QUAD_POS, buf, MAVLINK_MSG_ID_QUAD_POS_LEN, MAVLINK_MSG_ID_QUAD_POS_CRC);
@@ -169,6 +179,7 @@ static inline void mavlink_msg_quad_pos_send(mavlink_channel_t chan, uint8_t pos
 	packet.x = x;
 	packet.y = y;
 	packet.z = z;
+	packet.CMD = CMD;
 	packet.pos_no = pos_no;
 
 #if MAVLINK_CRC_EXTRA
@@ -187,14 +198,15 @@ static inline void mavlink_msg_quad_pos_send(mavlink_channel_t chan, uint8_t pos
   is usually the receive buffer for the channel, and allows a reply to an
   incoming message with minimum stack space usage.
  */
-static inline void mavlink_msg_quad_pos_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint8_t pos_no, int16_t x, int16_t y, int16_t z)
+static inline void mavlink_msg_quad_pos_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint8_t CMD, uint8_t pos_no, int16_t x, int16_t y, int16_t z)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char *buf = (char *)msgbuf;
 	_mav_put_int16_t(buf, 0, x);
 	_mav_put_int16_t(buf, 2, y);
 	_mav_put_int16_t(buf, 4, z);
-	_mav_put_uint8_t(buf, 6, pos_no);
+	_mav_put_uint8_t(buf, 6, CMD);
+	_mav_put_uint8_t(buf, 7, pos_no);
 
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_QUAD_POS, buf, MAVLINK_MSG_ID_QUAD_POS_LEN, MAVLINK_MSG_ID_QUAD_POS_CRC);
@@ -206,6 +218,7 @@ static inline void mavlink_msg_quad_pos_send_buf(mavlink_message_t *msgbuf, mavl
 	packet->x = x;
 	packet->y = y;
 	packet->z = z;
+	packet->CMD = CMD;
 	packet->pos_no = pos_no;
 
 #if MAVLINK_CRC_EXTRA
@@ -223,13 +236,23 @@ static inline void mavlink_msg_quad_pos_send_buf(mavlink_message_t *msgbuf, mavl
 
 
 /**
+ * @brief Get field CMD from quad_pos message
+ *
+ * @return Command
+ */
+static inline uint8_t mavlink_msg_quad_pos_get_CMD(const mavlink_message_t* msg)
+{
+	return _MAV_RETURN_uint8_t(msg,  6);
+}
+
+/**
  * @brief Get field pos_no from quad_pos message
  *
- * @return Position number
+ * @return Coordinate set number
  */
 static inline uint8_t mavlink_msg_quad_pos_get_pos_no(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_uint8_t(msg,  6);
+	return _MAV_RETURN_uint8_t(msg,  7);
 }
 
 /**
@@ -274,6 +297,7 @@ static inline void mavlink_msg_quad_pos_decode(const mavlink_message_t* msg, mav
 	quad_pos->x = mavlink_msg_quad_pos_get_x(msg);
 	quad_pos->y = mavlink_msg_quad_pos_get_y(msg);
 	quad_pos->z = mavlink_msg_quad_pos_get_z(msg);
+	quad_pos->CMD = mavlink_msg_quad_pos_get_CMD(msg);
 	quad_pos->pos_no = mavlink_msg_quad_pos_get_pos_no(msg);
 #else
 	memcpy(quad_pos, _MAV_PAYLOAD(msg), MAVLINK_MSG_ID_QUAD_POS_LEN);
