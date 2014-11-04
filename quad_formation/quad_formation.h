@@ -59,8 +59,9 @@ typedef enum QUAD_FORMATION_ID
 #define HAVE_ENUM_QUAD_CMD
 typedef enum QUAD_CMD
 {
-	QUAD_CMD_START_FORMATION=42, /* Start BGT formation Script | */
-	QUAD_CMD_ENUM_END=43, /*  | */
+	QUAD_CMD_START=42, /* Start BGT formation Script | */
+	QUAD_CMD_STOP=43, /* Start BGT formation Script | */
+	QUAD_CMD_ENUM_END=44, /*  | */
 } QUAD_CMD;
 #endif
 
