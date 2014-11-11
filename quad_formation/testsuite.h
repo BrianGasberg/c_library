@@ -30,7 +30,7 @@ static void mavlink_test_quad_pos(uint8_t system_id, uint8_t component_id, mavli
         uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
         uint16_t i;
 	mavlink_quad_pos_t packet_in = {
-		{ 17235, 17236, 17237, 17238, 17239, 17240, 17241, 17242, 17243, 17244 },{ 18275, 18276, 18277, 18278, 18279, 18280, 18281, 18282, 18283, 18284 },{ 19315, 19316, 19317, 19318, 19319, 19320, 19321, 19322, 19323, 19324 },185,252,63
+		{ 17.0, 18.0, 19.0, 20.0, 21.0, 22.0, 23.0, 24.0, 25.0, 26.0 },{ 297.0, 298.0, 299.0, 300.0, 301.0, 302.0, 303.0, 304.0, 305.0, 306.0 },{ 577.0, 578.0, 579.0, 580.0, 581.0, 582.0, 583.0, 584.0, 585.0, 586.0 },109,176,243
     };
 	mavlink_quad_pos_t packet1, packet2;
         memset(&packet1, 0, sizeof(packet1));
@@ -38,9 +38,9 @@ static void mavlink_test_quad_pos(uint8_t system_id, uint8_t component_id, mavli
         	packet1.cmd_id = packet_in.cmd_id;
         	packet1.pos_no = packet_in.pos_no;
         
-        	mav_array_memcpy(packet1.x, packet_in.x, sizeof(int16_t)*10);
-        	mav_array_memcpy(packet1.y, packet_in.y, sizeof(int16_t)*10);
-        	mav_array_memcpy(packet1.z, packet_in.z, sizeof(int16_t)*10);
+        	mav_array_memcpy(packet1.x, packet_in.x, sizeof(float)*10);
+        	mav_array_memcpy(packet1.y, packet_in.y, sizeof(float)*10);
+        	mav_array_memcpy(packet1.z, packet_in.z, sizeof(float)*10);
         
 
         memset(&packet2, 0, sizeof(packet2));
