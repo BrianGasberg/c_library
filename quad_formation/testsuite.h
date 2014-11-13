@@ -30,10 +30,11 @@ static void mavlink_test_quad_pos(uint8_t system_id, uint8_t component_id, mavli
         uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
         uint16_t i;
 	mavlink_quad_pos_t packet_in = {
-		{ 17.0, 18.0, 19.0, 20.0, 21.0, 22.0, 23.0, 24.0, 25.0, 26.0 },{ 297.0, 298.0, 299.0, 300.0, 301.0, 302.0, 303.0, 304.0, 305.0, 306.0 },{ 577.0, 578.0, 579.0, 580.0, 581.0, 582.0, 583.0, 584.0, 585.0, 586.0 },109,176,243
+		93372036854775807ULL,{ 73.0, 74.0, 75.0, 76.0, 77.0, 78.0, 79.0, 80.0, 81.0, 82.0 },{ 353.0, 354.0, 355.0, 356.0, 357.0, 358.0, 359.0, 360.0, 361.0, 362.0 },{ 633.0, 634.0, 635.0, 636.0, 637.0, 638.0, 639.0, 640.0, 641.0, 642.0 },133,200,11
     };
 	mavlink_quad_pos_t packet1, packet2;
         memset(&packet1, 0, sizeof(packet1));
+        	packet1.timestamp = packet_in.timestamp;
         	packet1.target_system = packet_in.target_system;
         	packet1.cmd_id = packet_in.cmd_id;
         	packet1.pos_no = packet_in.pos_no;
@@ -49,12 +50,12 @@ static void mavlink_test_quad_pos(uint8_t system_id, uint8_t component_id, mavli
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_quad_pos_pack(system_id, component_id, &msg , packet1.target_system , packet1.cmd_id , packet1.pos_no , packet1.x , packet1.y , packet1.z );
+	mavlink_msg_quad_pos_pack(system_id, component_id, &msg , packet1.timestamp , packet1.target_system , packet1.cmd_id , packet1.pos_no , packet1.x , packet1.y , packet1.z );
 	mavlink_msg_quad_pos_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_quad_pos_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.target_system , packet1.cmd_id , packet1.pos_no , packet1.x , packet1.y , packet1.z );
+	mavlink_msg_quad_pos_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.timestamp , packet1.target_system , packet1.cmd_id , packet1.pos_no , packet1.x , packet1.y , packet1.z );
 	mavlink_msg_quad_pos_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
@@ -67,7 +68,7 @@ static void mavlink_test_quad_pos(uint8_t system_id, uint8_t component_id, mavli
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
         
         memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_quad_pos_send(MAVLINK_COMM_1 , packet1.target_system , packet1.cmd_id , packet1.pos_no , packet1.x , packet1.y , packet1.z );
+	mavlink_msg_quad_pos_send(MAVLINK_COMM_1 , packet1.timestamp , packet1.target_system , packet1.cmd_id , packet1.pos_no , packet1.x , packet1.y , packet1.z );
 	mavlink_msg_quad_pos_decode(last_msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 }
